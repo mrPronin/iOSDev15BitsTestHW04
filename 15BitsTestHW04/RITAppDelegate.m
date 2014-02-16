@@ -16,7 +16,26 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    NSInteger randomNumber = arc4random() % NSIntegerMax;
+    
+    NSString* binaryString = [self binaryStringWithInteger02:randomNumber];
+    
+    NSLog(@"\nRandom integer\nhexadecimal: 0x%08x\nbinary: %@\ndecimal: %d\n",
+          randomNumber, binaryString, randomNumber);
+    
     return YES;
+}
+
+- (NSString*) binaryStringWithInteger02:(NSInteger) value {
+    NSMutableString*    string = [NSMutableString string];
+    
+    for (int i = sizeof(value)*8 - 1; i >= 0; i--) {
+        [string appendString:(value >> i) & 1 ? @"1" : @"0"];
+        [string appendString:(i % 4) ? @"" : @" " ];
+    }
+    
+    return string;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
